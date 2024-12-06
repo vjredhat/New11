@@ -1,0 +1,194 @@
+vi /etc/selinux/config (disabled)
+vi /etc/ssh/sshd_config (if we want to change port)
+setenforce 0
+service restart sshd
+firewall-cmd port add(firewall-cmd --permanent --add-port=225/tcp)
+firewall reload      (firewall-cmd --reload)
+network file me ip add 
+(vi /etc/sysconfig/network-scripts/ifcfg-ens18)
+
+network manager restart
+                         after ssh
+     #hostname change(hostnamectl set-hostname host.poonam)
+     #bash
+     password change(passwd)
+     vi /etc/resolve me entry
+      yum install -y wget 
+
+How to configure IP address in VM
+
+Step1: vi /etc/selinux/config
+       change to "disabled"
+step2:  getenforce (if it not disabled then run this command #shutdown -r now)
+        disabled
+step3: vi /etc/sysconfig/network-scripts/ifcfg-ens18
+      Change:-                                                        
+      BOOTPROTO=static
+      ONBOOT=yes
+      Add:-
+      IPADDR= 101.53.148.177   101.53.148.55
+      #NETMASK=255.255.255.0
+      GATEWAY=101.53.148.1
+       DNS1=8.8.8.8
+       DNS2=8.8.4.4
+#ip a or ip addr  (to check ip is added or not)
+
+step: systemctl restart NetworkManager
+step4: vi /etc/resolv.conf  (yum ki command bhi nhi chalegi)
+       nameserver 8.8.8.8 
+       nameserver 8.8.4.4
+
+Step5:reboot(when you reboot may be  vi /etc/resolv.conf entryies change so once check after reboot)
+
+vi /etc/ssh/sshd_config 
+firewall-cmd port add(firewall-cmd --permanent --add-port=225/tcp)
+firewall reload      (firewall-cmd --reload)
+step: systemctl restart NetworkManager
+step6: reboot (when you reboot may be  vi /etc/resolv.conf entryies change so once check after reboot)
+ 
+Password ko notepad me likh ke phir waha se paste karo
+
+
+TO INSTALL WHM:root (gip@1992)
+
+DISABLE FIREWALLD
+#systemctl stop firewalld.service  
+#systemctl disable firewalld.service
+DISABLED NETWORKMANAGER 
+#systemctl stop NetworkManager
+#systemctl disable NetworkManager
+#yum update -y
+#yum install wget curl screen -y
+#cd /home
+#curl -o latest -L https://securedownloads.cpanel.net/latest
+#sh latest
+
+https://101.53.148.177:2087 (hit on browser)
+
+#Install firewall then
+
+
+#vi /etc/csf/csf.conf
+	testing ="0"   0 hai to 1 kar do aur 1 hai to 0 kar do
+	service csf restart
+	chkconfig csf on  
+
+# check port:
+TCP_IN="20,21,22,25,53,80,110,143,443,465,587,853,993,995,2077,2078,2079,2080,2082,2083,2086,2087,2095,2096,8443,2293,3306,49152:65534"
+
+
+
+TCP_OUT = "20,21,22,25,37,43,53,80,110,113,443,587,853,873,993,995,2086,2087,2089,2703,3306,49152:65534"
+
+#############################
+#      CWP Installed        #
+#############################
+
+Go to CentOS WebPanel Admin GUI at http://SERVER_IP:2030/
+
+http://101.53.148.177:2030
+SSL: https://101.53.148.177:2031
+---------------------
+Username: root
+Password: ssh server root password
+MySQL root Password: cNJjP8Cp4nSo
+
+
+
+
+TO CONFIGURE UBUNTU SERVER
+
+subnet:101.53.148.0/22  or 101.53.148.0/24   101.53.148.143               101.53.148.35
+address:101.53.148.177
+gateway:101.53.148.1                                                       
+nameserver:8.8.8.,8.8.4.4
+
+AUR FILE SYSTEM ME CHOOSE KARNA HAI (USE An entire disk)
+
+(choose)openssh
+
+jabtak reboot ka option na aa jaaye hone do
+
+ek baar daalna hai username uska password then
+#sudo su
+#cd
+#passwd root
+#password dalo
+#vi /etc/ssh/sshd_config
+change ssh port
+paasword authentication yes
+permit root login yes
+restart sshd service or systemctl restart sshd
+ufw allow 2282/tcp
+ufw allow 5666/tcp
+ufw reload
+hostnamectl set-hostname host.tvapi-linux-23102023.com
+    1  df -h
+    2  free -m
+    3  top -cd1
+    4  apt-get update
+    5  passwd
+    6  vi /etc/ssh/sshd_config
+    7  systemctl restart sshd
+    8  ufw allow 2282/tcp
+    9  ufw reload
+    IF NOT INSTALLED   apt-get install ufw
+
+ To resize disk
+#lvresize --extents +100%FREE --resizefs /dev/mapper/ubuntu--vg-ubuntu--lv
+                                   OR
+#lvresize -l +100%FREE --resizefs /dev/mapper/ubuntu--vg-ubuntu--lv
+                            ufw enable
+   10  hostnamectl set-hostname host.livelineload.com
+   11  bash
+   12  history
+/etc/netplan
+ls
+# cat 00-installer-config.yaml
+# This is the network config written by 'subiquity'
+network:
+  ethernets:
+    ens18:
+      addresses:
+      - 101.53.148.179/22
+      gateway4: 101.53.148.1
+      nameservers:
+        addresses:
+        - 8.8.8.8
+        search: []
+  version: 2
+
+ 1  vi /etc/netplan/50-cloud-init.yaml
+    2  netplan apply
+    3  ssh-keygen -A
+    4  reboot
+    5  cd
+    6  passwd root
+    7  vi /etc/ssh/sshd_config
+    8  service sshd restart
+    9  ufw allow 2267/tcp
+  
+   12  service sshd restart
+   13  hostnamectl set-hostname crdexon3-db-04032023
+   14  bash
+   15  passwd
+   16  vi /etc/ssh/ssh_config
+   17  cd /etc/ssh/
+   18  ll
+   19  vi sshd_config
+   20  systemctl restart sshd
+   21  ip a
+   22  apt install apache2
+   23  apache2 -v
+   24  systemctl start apache2
+   25  systemctl enable apache2
+   26  ufw app list
+   27  ufw allow 'Apache Full'
+   28  ufw status
+   29  ufw reload
+   30  apt update
+
+
+
+,2269,8443,8880,8447,22557,49152:65535,3011,5666,8700"
+
